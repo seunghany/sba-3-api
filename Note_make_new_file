@@ -1,4 +1,4 @@
-anaconda3
+여기서는 anaconda3 promt
 
 dir
 
@@ -11,10 +11,12 @@ mkdir sba-ui-3
 
 code .
 
+-- 여기서 부터 터미널
 touch app.py // (create app.py)
 
 code app.py // (Enter app.py)
 
+-- 여기서 부터 코드
 from flask import flask
 
 app = Flask(__name__)
@@ -26,3 +28,6 @@ def index():
 
 if __name__ == "__main__":
     app.run()
+
+-- 다시 여기서 부터 터미널
+python app.py
