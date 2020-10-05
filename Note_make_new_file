@@ -1,0 +1,28 @@
+anaconda3
+
+dir
+
+cd sbaprojectt
+
+dir
+
+mkdir sba-ui-3
+(rmdir sba-ui-3)
+
+code .
+
+touch app.py // (create app.py)
+
+code app.py // (Enter app.py)
+
+from flask import flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Hello World"
+
+
+if __name__ == "__main__":
+    app.run()
