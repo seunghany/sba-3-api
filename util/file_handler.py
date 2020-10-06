@@ -2,6 +2,8 @@
 from dataclasses import dataclass
 import pandas as pd
 import xlrd
+import gmaps
+
 # Path 는 바뀜
 """
 context = "/Users/seung/SbaProjects/beatCamp-python"
@@ -28,3 +30,6 @@ class FileReader:
     def xls_to_df(self, header, usecols) -> object:
         file = self.new_file()
         return pd.read_excel(file, header = header, usecols = usecols)
+
+    def create_gmaps(self):
+        return gmaps.Client(key = '')

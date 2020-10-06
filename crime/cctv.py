@@ -14,7 +14,7 @@ class Cctv:
         print("-------------- CCTV & POP ------------------------")
         cctv = self.get_cctv()
         population = self.get_population()
-        Cctv.show_corrcoef(population, cctv)
+        self.show_corrcoef(population, cctv)
 
         # print(f'CCTV Header: {cctv.head()}')
         # print(f'Population Header: {population.head()}')
@@ -65,8 +65,8 @@ class Cctv:
        외국인비율 과 CCTV 상관계수 [[ 1.         -0.13607433] 거의 무시될 수 있는
                                    [-0.13607433  1.        ]]                        
     """
-    @staticmethod
-    def show_corrcoef(population, cctv):
+
+    def show_corrcoef(self, population, cctv):
         population['외국인비율'] = 100.0 * population['외국인']/population['인구수']
         population['고령자비율'] = 100.0 * population['고령자']/population['인구수']
         cctv.drop(["2013년도 이전","2014년","2015년","2016년"], 1, inplace=True)
@@ -76,6 +76,10 @@ class Cctv:
 
         print(f'고령자비율과 CCTV의 상관계수 {cor1}')
         print(f'외국인비율과 CCTV의 상관계수 {cor2}')
+        reader = self.reader
+        reader.context = reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/saved_data/'
+        reader.fname = 'cctv_population.csv'
+        cctv_population.to_csv(reader.new_file())
 
 if __name__ == '__main__':
     cctv = Cctv()
