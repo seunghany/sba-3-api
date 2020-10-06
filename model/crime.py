@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from util.file_handler import FileReader
+from util.file_helper import FileReader
 
 class CrimeModel:
     def __init__(self):

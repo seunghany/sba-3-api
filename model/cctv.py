@@ -3,9 +3,9 @@ import numpy as np
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from util.file_handler import FileReader
+from util.file_helper import FileReader
 
-class Cctv:
+class CctvModel:
     def __init__(self):
         print(f'hello')
         self.reader = FileReader()
@@ -14,7 +14,7 @@ class Cctv:
         print("-------------- CCTV & POP ------------------------")
         cctv = self.get_cctv()
         population = self.get_population()
-        self.show_corrcoef(population, cctv)
+        self.set_cctv_population(population, cctv)
         print('----------- CCTV & POP ----------')
     
         # print(f'CCTV Header: {cctv.head()}')
@@ -67,7 +67,7 @@ class Cctv:
                                    [-0.13607433  1.        ]]                        
     """
 
-    def show_corrcoef(self, population, cctv):
+    def set_cctv_population(self, population, cctv):
         population['외국인비율'] = 100.0 * population['외국인']/population['인구수']
         population['고령자비율'] = 100.0 * population['고령자']/population['인구수']
         cctv.drop(["2013년도 이전","2014년","2015년","2016년"], 1, inplace=True)
@@ -78,11 +78,20 @@ class Cctv:
         print(f'고령자비율과 CCTV의 상관계수 {cor1}')
         print(f'외국인비율과 CCTV의 상관계수 {cor2}')
         reader = self.reader
-        reader.context = reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/saved_data/'
+        reader.context = reader.context = '/Users/seung/SbaProjects/sba-3-api/saved_data/'
         reader.fname = 'cctv_population.csv'
         cctv_population.to_csv(reader.new_file())
 
+    def get_cctv_population(self):
+        reader = self.reader
+        reader.context = reader.context = '/Users/seung/SbaProjects/sba-3-api/saved_data/'
+        reader.fname = 'cctv_population.csv'
+        cctv_population = reader.read_csv(reader.new_file(), encoding='UTF-8', sep=',', index_col = '구별')
+        print(f'{cctv_population.head()}')
+        return cctv_population
+
+
 if __name__ == '__main__':
-    cctv = Cctv()
+    cctv = CctvModel()
     # cctv.get_population()
     cctv.hook_process()
