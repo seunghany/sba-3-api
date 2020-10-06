@@ -1,6 +1,7 @@
 # 기본 entity 파일.
 from dataclasses import dataclass
 import pandas as pd
+import xlrd
 # Path 는 바뀜
 """
 context = "/Users/seung/SbaProjects/beatCamp-python"
@@ -24,4 +25,6 @@ class FileReader:
         file = self.new_file()
         return pd.read_csv(file, encoding='UTF-8', thousands=',')
 
-    
+    def xls_to_df(self, header, usecols) -> object:
+        file = self.new_file()
+        return pd.read_excel(file, header = header, usecols = usecols)
