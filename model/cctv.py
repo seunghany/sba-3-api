@@ -86,7 +86,7 @@ class CctvModel:
         reader = self.reader
         reader.context = reader.context = '/Users/seung/SbaProjects/sba-3-api/saved_data/'
         reader.fname = 'cctv_population.csv'
-        cctv_population = reader.read_csv(reader.new_file(), encoding='UTF-8', sep=',', index_col = '구별')
+        cctv_population = pd.read_csv(reader.new_file(), encoding='UTF-8', sep=',', index_col = '구별')
         print(f'{cctv_population.head()}')
         return cctv_population
 

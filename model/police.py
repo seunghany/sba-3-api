@@ -50,7 +50,6 @@ class Police:
         x = police[crime_rate_columns].values
 
         min_max_scaler = preprocessing.MinMaxScaler()
-
         """
         스케일링은 선형변환을 적응하여
         전체 자료의 분포를 평균 0, 분산 1이 되도록 만드는 과정
@@ -63,22 +62,21 @@ class Police:
         분포를 유사하게 만들어 주는 등의 작업.
         평균값 정규화, 중간값 정규화 ..
         """
-        police_norm = pd.DataFrame(x_scaled, columns = crime_columns, index = police.index)
+        police_norm = pd.DataFrame(x_scaled, columns= crime_columns, index=police.index)
         police_norm[crime_rate_columns] = police[crime_rate_columns]
 
-        cctv = CctvModel
+        cctv = CctvModel()
 
-        cctv_population = cctv.get_cctv_population
-        print(f'cctv_population:: {cctv_population.csv}')
+        cctv_population = cctv.get_cctv_population()
+
+        print(f'cctv_population :: {cctv_population.head()}')
 
         police_norm['범죄'] = np.sum(police_norm[crime_rate_columns], axis = 1)
         police_norm['검거'] = np.sum(police_norm[crime_columns], axis = 1)
-        print((f'police_norm columns :: {police_norm.columns}'))
-
+        print(f'police_norm columns :: {police_norm.columns}')
         reader = self.reader
-        reader.context = reader.context = '/Users/seung/SbaProjects/sba-3-api/saved_data/'
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/saved_data/'
         reader.fname = 'police_norm.csv'
-
         police_norm.to_csv(reader.new_file(), sep=',', encoding='UTF-8')
 
 
