@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
@@ -13,9 +14,10 @@ class Cctv:
         print("-------------- CCTV & POP ------------------------")
         cctv = self.get_cctv()
         population = self.get_population()
+        Cctv.show_corrcoef(population, cctv)
 
-        print(f'CCTV Header: {cctv.head()}')
-        print(f'Population Header: {population.head()}')
+        # print(f'CCTV Header: {cctv.head()}')
+        # print(f'Population Header: {population.head()}')
         
     
     def get_cctv(self):
@@ -46,6 +48,34 @@ class Cctv:
         population.dropna(inplace=True)
         return population
 
+    """
+        고령자비율과 CCTV 의 상관계수 [[ 1.         -0.28078554]
+                                    [-0.28078554  1.        ]] 
+        외국인비율과 CCTV 의 상관계수 [[ 1.         -0.13607433]
+                                    [-0.13607433  1.        ]]
+       r이 -1.0과 -0.7 사이이면, 강한 음적 선형관계,
+       r이 -0.7과 -0.3 사이이면, 뚜렷한 음적 선형관계,
+       r이 -0.3과 -0.1 사이이면, 약한 음적 선형관계,
+       r이 -0.1과 +0.1 사이이면, 거의 무시될 수 있는 선형관계,
+       r이 +0.1과 +0.3 사이이면, 약한 양적 선형관계,
+       r이 +0.3과 +0.7 사이이면, 뚜렷한 양적 선형관계,
+       r이 +0.7과 +1.0 사이이면, 강한 양적 선형관계
+       고령자비율 과 CCTV 상관계수 [[ 1.         -0.28078554] 약한 음적 선형관계
+                                   [-0.28078554  1.        ]]
+       외국인비율 과 CCTV 상관계수 [[ 1.         -0.13607433] 거의 무시될 수 있는
+                                   [-0.13607433  1.        ]]                        
+    """
+    @staticmethod
+    def show_corrcoef(population, cctv):
+        population['외국인비율'] = 100.0 * population['외국인']/population['인구수']
+        population['고령자비율'] = 100.0 * population['고령자']/population['인구수']
+        cctv.drop(["2013년도 이전","2014년","2015년","2016년"], 1, inplace=True)
+        cctv_population = pd.merge(cctv, population, on='구별')
+        cor1 = np.corrcoef(cctv_population['고령자비율'], cctv_population['소계'])
+        cor2 = np.corrcoef(cctv_population['외국인비율'], cctv_population['소계'])
+
+        print(f'고령자비율과 CCTV의 상관계수 {cor1}')
+        print(f'외국인비율과 CCTV의 상관계수 {cor2}')
 
 if __name__ == '__main__':
     cctv = Cctv()
