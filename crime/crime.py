@@ -9,10 +9,13 @@ class CrimeModel:
         print(f'hello')
         self.reader = FileReader()
     
-        def hook_process(self):
-            print("-------------- CRIME & POLICE ------------------------")
-            crime = self.get_crime()
-            self.get_station(crime)
+    def hook_process(self):
+        print('----------- CRIME & POLICE ----------')
+        crime = self.get_crime()
+        print(f'{crime.head()}')
+        # self.get_station(crime)
+        crime_police = self.get_crime_police()
+        print(f'{crime_police.head()}')
 
 
     def get_crime(self):
@@ -47,8 +50,6 @@ class CrimeModel:
             gu_name = [gu for gu in t if gu[-1] == '구'][0]
             gu_names.append(gu_name)
         crime['구별'] = gu_names
-        print("*****" *20)
-        print(crime.head())
 
         # 구 이름이랑 위치랑 다른곳 맞춰주기
         crime.loc[crime['관서명'] == '혜화서', ['구별']] == '종로구'
@@ -58,11 +59,24 @@ class CrimeModel:
         crime.loc[crime['관서명'] == '방배서', ['구별']] == '서초구'
         crime.loc[crime['관서명'] == '수서서', ['구별']] == '강남구'
 
-        crime.to_csv()
+        print(crime.head())
+        reader = self.reader
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/'
+        reader.fname = 'crime_police.csv'
+        crime.to_csv(reader.new_file())
+
+    def get_crime_police(self):
+        reader = self.reader
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/'
+        reader.fname = 'crime_police.csv'
+        reader.new_file()
+        crime_police = reader.csv_to_df()
+        print(f'{crime_police.head()}')
+        return crime_police
 
 if __name__ == '__main__':
     crime = CrimeModel()
-    crime.get_crime()
+    crime.hook_process()
 
 # class Crime:
 #     def __init__(self):

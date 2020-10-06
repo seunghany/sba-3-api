@@ -15,7 +15,8 @@ class Cctv:
         cctv = self.get_cctv()
         population = self.get_population()
         self.show_corrcoef(population, cctv)
-
+        print('----------- CCTV & POP ----------')
+    
         # print(f'CCTV Header: {cctv.head()}')
         # print(f'Population Header: {population.head()}')
         
