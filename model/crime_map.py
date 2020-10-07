@@ -27,7 +27,7 @@ class CrimeMap:
         reader.context = os.path.join(baseurl,'saved_data/')
         reader.fname = 'police_norm.csv'
         reader.new_file()
-        police_norm = reader.csv_to_dframe()
+        police_norm = reader.csv_to_df()
         crimeModel = CrimeModel()
         crime = crimeModel.get_crime()
         print(f'{police_norm.head()}')
@@ -48,10 +48,10 @@ class CrimeMap:
 
         # crime_in_seroul.csv 의 raw data
         reader = self.reader
-        reader.context = os.path.join(baseurl,'saved_data')
+        reader.context = os.path.join(baseurl,'data/')
         reader.fname = 'police_position.csv'
         reader.new_file()
-        police_pos = reader.csv_to_dframe()
+        police_pos = reader.csv_to_df()
         police_pos['lat'] = station_lats
         police_pos['lng'] = station_lngs
 
@@ -68,7 +68,7 @@ class CrimeMap:
         # 지도 그리기
        
         map = folium.Map(location=[37.5502, 126.982], zoom_start=12)
-        map.choropleth(
+        folium.Choropleth(
             geo_data = seoul_map,
             name = 'choropleth',
             data = tuple(zip(police_norm['구별'], police_norm['범죄'])),
@@ -79,10 +79,10 @@ class CrimeMap:
             line_opacity = 0.2,
             legend_name = 'CRIME (%)'
 
-        )
+        ).add_to(map)
         folium.LayerControl().add_to(map)
         reader = self.reader
-        reader.context = os.path.join(baseurl,'saved_data')
+        reader.context = os.path.join(baseurl,'saved_data/')
         reader.fname = 'police.html'
         map.save(reader.new_file())
         
