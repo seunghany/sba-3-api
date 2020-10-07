@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import pandas as pd
 import xlrd
 import gmaps
+import json
 
 # Path 는 바뀜
 """
@@ -31,5 +32,13 @@ class FileReader:
         file = self.new_file()
         return pd.read_excel(file, header = header, usecols = usecols)
 
+    def json_load(self) -> object:
+        # 안에 있는 method 까지 쓸거면 dframe. ex DataFrame.head() 등등 
+        # 이건 load 만 써서 화면만 볼꺼기 때문에 
+        # json_to_df 는 틀린 표현이다.
+        file = self.new_file()
+        return json.load(open(file), encoding='UTF-8')
+
     def create_gmaps(self):
-        return gmaps.Client(key = '')
+        return gmaps.Client(key = 'AIzaSyBz9GRH0blpoiLp1co3O5V3hXgwT928jyY')
+

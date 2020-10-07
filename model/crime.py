@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from util.file_helper import FileReader
-
+baseurl = os.path.dirname(os.path.abspath(__file__)) # c:\Users\seung\SbaProjects\sba-3-api\model
 class CrimeModel:
     def __init__(self):
         print(f'hello')
@@ -20,7 +20,8 @@ class CrimeModel:
 
     def get_crime(self):
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/data/'
+        # reader.context = '/Users/seung/SbaProjects/sba-3-api/model/data/'
+        reader.context = os.path.join(baseurl,'data/')
         reader.fname = 'crime_in_seoul.csv'
         reader.new_file()
         crime = reader.csv_to_df()
@@ -61,13 +62,15 @@ class CrimeModel:
 
         print(crime.head())
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/data'
+        # reader.context = '/Users/seung/SbaProjects/sba-3-api/model/data/'
+        reader.context = os.path.join(baseurl,'data/')
         reader.fname = 'crime_police.csv'
         crime.to_csv(reader.new_file())
 
     def get_crime_police(self):
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/data/'
+        # reader.context = '/Users/seung/SbaProjects/sba-3-api/model/data/'
+        reader.context = os.path.join(baseurl,'data/')
         reader.fname = 'crime_police.csv'
         reader.new_file()
         crime_police = reader.csv_to_df()

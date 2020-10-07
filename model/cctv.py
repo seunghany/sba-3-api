@@ -4,6 +4,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from util.file_helper import FileReader
+baseurl = os.path.dirname(os.path.abspath(__file__)) # c:\Users\seung\SbaProjects\sba-3-api\model
 
 class CctvModel:
     def __init__(self):
@@ -23,7 +24,8 @@ class CctvModel:
     
     def get_cctv(self):
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/data/'
+        # reader.context = '/Users/seung/SbaProjects/sba-3-api/model/data/'
+        reader.context = os.path.join(baseurl,'data/')
         reader.fname = 'cctv_in_seoul.csv'
         reader.new_file()
         cctv = reader.csv_to_df()
@@ -34,7 +36,8 @@ class CctvModel:
 
     def get_population(self):
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/data/'
+        # reader.context = '/Users/seung/SbaProjects/sba-3-api/model/data/'
+        reader.context = os.path.join(baseurl,'data/')
         reader.fname = 'pop_in_seoul.xls'
         reader.new_file() # return self.context + self.fname
         population = reader.xls_to_df(2, 'B,D,G,J,N')
