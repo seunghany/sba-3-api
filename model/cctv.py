@@ -23,7 +23,7 @@ class CctvModel:
     
     def get_cctv(self):
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/'
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/data/'
         reader.fname = 'cctv_in_seoul.csv'
         reader.new_file()
         cctv = reader.csv_to_df()
@@ -34,7 +34,7 @@ class CctvModel:
 
     def get_population(self):
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/'
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/data/'
         reader.fname = 'pop_in_seoul.xls'
         reader.new_file() # return self.context + self.fname
         population = reader.xls_to_df(2, 'B,D,G,J,N')

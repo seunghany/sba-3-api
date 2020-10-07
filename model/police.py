@@ -20,6 +20,7 @@ class Police:
     def hook_process(self):
         print('----------- POLICE ----------')
         self.create_crime_rate()
+        self.get_police_norm()
 
     def create_crime_rate(self):
         crime = CrimeModel()
@@ -78,6 +79,16 @@ class Police:
         reader.context = '/Users/seung/SbaProjects/sba-3-api/saved_data/'
         reader.fname = 'police_norm.csv'
         police_norm.to_csv(reader.new_file(), sep=',', encoding='UTF-8')
+
+    def get_police_norm(self):
+        """ 구별,살인,강간,강도,절도,폭력,살인검거율,강간검거율,강도검거율,절도검거율,폭력검거율,범죄,검거"""
+        reader = self.reader
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/saved_data/'
+        reader.fname = 'police_norm.csv'
+        reader.new_file()
+        police_norm = reader.csv_to_df()
+        print(f'{police_norm.head()}')
+        return police_norm
 
 
 if __name__ == '__main__':

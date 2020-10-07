@@ -20,7 +20,7 @@ class CrimeModel:
 
     def get_crime(self):
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/'
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/data/'
         reader.fname = 'crime_in_seoul.csv'
         reader.new_file()
         crime = reader.csv_to_df()
@@ -61,13 +61,13 @@ class CrimeModel:
 
         print(crime.head())
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/'
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/data'
         reader.fname = 'crime_police.csv'
         crime.to_csv(reader.new_file())
 
     def get_crime_police(self):
         reader = self.reader
-        reader.context = '/Users/seung/SbaProjects/sba-3-api/crime/'
+        reader.context = '/Users/seung/SbaProjects/sba-3-api/data/'
         reader.fname = 'crime_police.csv'
         reader.new_file()
         crime_police = reader.csv_to_df()
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 # class Crime:
 #     def __init__(self):
 #         self.fileReader = FileReader()
-#         self.context = '/Users/seung/SbaProjects/sba-3-api/crime/'
+#         self.context = '/Users/seung/SbaProjects/sba-3-api/data/'
 
 
 #     def new_model(self, payload) -> object:
