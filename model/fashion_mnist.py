@@ -2,19 +2,20 @@ import os
 
 import tensorflow as tf
 from tensorflow import keras
-import numpy as np
 import matplotlib.pyplot as plt
 
 print(tf.version.VERSION)
 
+
 class FashionMnist:
     def __init__(self):
-        class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+        self.class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
-    
+
     def hook(self):
         self.create_model()
-        self.get_data()
+        image_list = self.get_data()
+        self.preprocess(image_list[0], image_list[1])
 
 
     def get_data(self) -> []:
@@ -29,9 +30,11 @@ class FashionMnist:
         plt.grid(False)
         plt.show()
 
-        return []
+        return [train_images, train_labels, test_images, test_labels]
+
 
     
+
     def preprocess(self, train_images, train_labels):
         plt.figure(figsize=(10,10))
         for i in range(25):
@@ -42,7 +45,10 @@ class FashionMnist:
             plt.imshow(train_images[i], cmap=plt.cm.binary)
             plt.xlabel(class_names[train_labels[i]])
         plt.show()
+        
+
 
 if __name__ == '__main__':
     fashion = FashionMnist()
     fashion.get_data()
+    
