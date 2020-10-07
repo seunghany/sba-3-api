@@ -13,9 +13,12 @@ class FashionMnist:
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
     def hook(self):
-        self.create_model()
         image_list = self.get_data()
         self.preprocess(image_list[0], image_list[1])
+        model = self.create_model()
+        model = self.train_model(model, image_list[0], image_list[1])
+        self.test_model(model, image_list[2], image_list[3])
+
 
 
     def get_data(self) -> []:
@@ -32,7 +35,6 @@ class FashionMnist:
 
         return [train_images, train_labels, test_images, test_labels]
 
-
     
 
     def preprocess(self, train_images, train_labels):
@@ -43,12 +45,33 @@ class FashionMnist:
             plt.yticks([])
             plt.grid(False)
             plt.imshow(train_images[i], cmap=plt.cm.binary)
-            plt.xlabel(class_names[train_labels[i]])
+            plt.xlabel(self.class_names[train_labels[i]])
         plt.show()
+
+    def create_model(self) -> object:
+        model = keras.Sequential([
+            keras.layers.Flatten(input_shape=(28, 28)),
+            keras.layers.Dense(128, activation='relu'),
+            keras.layers.Dense(10, activation='softmax')
+        ])
+        model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+        return model
+
         
+
+    def train_model(self, model, train_images, train_labels):
+        model.fit(train_images, train_labels, epochs=5)
+        return model
+
+    def test_model(self, model, test_images, test_labels):    
+        test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
+
+        print('\n테스트 정확도:', test_acc)
 
 
 if __name__ == '__main__':
     fashion = FashionMnist()
-    fashion.get_data()
-    
+    fashion.hook()
